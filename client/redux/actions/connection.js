@@ -107,14 +107,11 @@ export const connectToRedis = createAction('CONNECT', config => ({getState, disp
           }
           return;
         }
-        const version = redis.serverInfo.redis_version;
-        if (version && version.length >= 5) {
-          const versionNumber = Number(version[0] + version[2]);
-          if (versionNumber < 28) {
-            alert('Medis only supports Redis >= 2.8 because servers older than 2.8 don\'t support SCAN command, which means it not possible to access keys without blocking Redis.');
-            dispatch(disconnect());
-            return;
-          }
+        const version = redis.serverInfo.tile38_version;
+        if (!version) {
+          alert('Cannot detect Tile38 version, only version >= 1.9.0 is officially supported. Check you are not connecting to a Redis instance by accident.');
+          dispatch(disconnect());
+          return;
         }
         next({redis, config, index: getIndex(getState)});
       })
