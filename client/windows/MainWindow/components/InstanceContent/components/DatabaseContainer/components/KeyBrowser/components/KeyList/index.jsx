@@ -111,8 +111,8 @@ class KeyList extends React.Component {
           setTimeout(this.scan.bind(this, this.lastFirstTime), 0)
           return
         }
+        const newCursor = res[0]
         let fetchedKeys = res[1]
-        const newCursor = cursor + fetchedKeys.length;
 
         let promise
         if (fetchedKeys.length) {
@@ -137,7 +137,7 @@ class KeyList extends React.Component {
           let needContinue = true
           if (filterKeyExists && firstTime) {
             needContinue = false
-          } else if (fetchedKeys.length === 0) {
+          } else if (Number(newCursor) === 0) {
             needContinue = false
           } else if (count >= 100) {
             needContinue = false
@@ -158,7 +158,7 @@ class KeyList extends React.Component {
             })
           } else {
             this.setState({
-              cursor: 0,
+              cursor,
               scanning: false,
               keys: this.state.keys.concat(keys)
             }, () => {
@@ -203,7 +203,7 @@ class KeyList extends React.Component {
       const keys = this.state.keys
       const deleted = keys.splice(this.index, 1)
       if (deleted.length) {
-        this.props.redis.del(deleted[0][0])
+        this.props.redis.del(this.state.collection, deleted[0][0])
         if (this.index >= keys.length - 1) {
           this.index -= 1
         }
@@ -257,13 +257,13 @@ class KeyList extends React.Component {
           } else if (key === 'copy') {
             clipboard.writeText(this.state.keys[this.index][0])
           } else if (key === 'ttl') {
-            this.props.redis.pttl(this.state.selectedKey).then(ttl => {
+            this.props.redis.ttl(this.state.collection, this.state.selectedKey).then(ttl => {
               showModal({
                 button: 'Set Expiration',
                 form: {
                   type: 'object',
                   properties: {
-                    'PTTL (ms):': {
+                    'TTL (s):': {
                       type: 'number',
                       minLength: 1,
                       default: ttl
@@ -271,16 +271,16 @@ class KeyList extends React.Component {
                   }
                 }
               }).then(res => {
-                const ttl = Number(res['PTTL (ms):'])
+                const ttl = Number(res['TTL (s):'])
                 if (ttl >= 0) {
-                  this.props.redis.pexpire(this.state.selectedKey, ttl).then(res => {
+                  this.props.redis.expire(this.state.collection, this.state.selectedKey, ttl).then(res => {
                     if (res <= 0) {
                       alert('Update Failed')
                     }
                     this.props.onKeyMetaChange()
                   })
                 } else {
-                  this.props.redis.persist(this.state.selectedKey, () => {
+                  this.props.redis.persist(this.state.collection, this.state.selectedKey, () => {
                     this.props.onKeyMetaChange()
                   })
                 }
