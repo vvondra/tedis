@@ -15,7 +15,7 @@ class PatternList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.db !== this.props.db) {
+    if (nextProps.collection !== this.props.collection) {
       this.updatePattern('')
     }
     if (nextProps.pattern !== this.props.pattern) {
@@ -65,7 +65,7 @@ class PatternList extends React.Component {
           <li
             className="manage-pattern-button"
             onClick={() => {
-              ipcRenderer.send('create patternManager', `${this.props.connectionKey}|${this.props.db}`)
+              ipcRenderer.send('create patternManager', `${this.props.connectionKey}|${this.props.collection}`)
             }}
             >
             <span className="icon icon-cog"/>

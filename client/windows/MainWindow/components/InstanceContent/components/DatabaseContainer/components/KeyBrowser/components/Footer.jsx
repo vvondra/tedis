@@ -5,98 +5,67 @@ import React from 'react'
 class Footer extends React.Component {
   constructor() {
     super()
-    this.state = {}
+    this.state = {
+      collections: [],
+      keys: 0
+    }
   }
 
   componentDidMount() {
-    this.updateInfo()
-    this.updateDBCount()
-    this.interval = setInterval(this.updateInfo.bind(this), 10000)
+    this.updateCollections()
+    this.updateInfo(this.props.collection)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.db !== this.props.db) {
-      this.updateInfo()
+    if (nextProps.collection !== this.props.collection) {
+      this.updateInfo(nextProps.collection)
     }
   }
 
-  updateDBCount() {
-    this.props.redis.config('get', 'databases', (err, res) => {
-      if (!err && res[1]) {
-        this.setState({databases: Number(res[1])})
-      } else {
-        const redis = this.props.redis.duplicate()
-        const select = redis.select.bind(redis)
-        this.guessDatabaseNumber(select, 15).then(count => {
-          return typeof count === 'number' ? count : this.guessDatabaseNumber(select, 1, 0)
-        }).then(count => {
-          this.setState({databases: count + 1})
-        })
+  updateCollections() {
+    this.props.redis.keys('*', (err, res) => {
+      if (!err & res.length > 0) {
+        this.setState({collections: res})
+        this.props.onDatabaseChange(res[0])
       }
     })
   }
 
-  updateInfo() {
-    this.props.redis.info((err, res) => {
-      if (err) {
-        return
-      }
-      const info = {}
-
-      const lines = res.split('\r\n')
-      for (let i = 0; i < lines.length; i++) {
-        const parts = lines[i].split(':')
-        if (parts[1]) {
-          info[parts[0]] = parts[1]
+  updateInfo(collection) {
+    if (!collection) {
+      return;
+    }
+    this.props.redis.send_command('stats', [collection], (err, res) => {
+      if (!err) {
+        let info = res[0];
+        for (let i = 0; i < info.length; i = i + 2) {
+          if (info[i] === 'num_objects') {
+            this.setState({ keys: info[i + 1] });
+            break;
+          }
         }
       }
-
-      this.setState(info)
-    })
-  }
-
-  guessDatabaseNumber(select, startIndex, lastSuccessIndex) {
-    if (startIndex > 30) {
-      return Promise.resolve(30)
-    }
-    return select(startIndex)
-    .then(() => {
-      return this.guessDatabaseNumber(select, startIndex + 1, startIndex)
-    }).catch(err => {
-      if (typeof lastSuccessIndex === 'number') {
-        return lastSuccessIndex
-      }
-      return null
     })
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval)
     this.interval = null
   }
 
   handleChange(evt) {
-    const db = Number(evt.target.value)
-    this.props.onDatabaseChange(db)
+    const collection = evt.target.value;
+    this.props.onDatabaseChange(collection)
   }
 
   render() {
-    const db = `db${this.props.db}`
-    let keys = 0
-    if (this.state[db]) {
-      const match = this.state[db].match(/keys=(\d+)/)
-      if (match) {
-        keys = match[1]
-      }
-    }
     return (<footer className="toolbar toolbar-footer">
-      <span style={{marginLeft: 6}}>Keys: {keys}</span>
+      <span style={{marginLeft: 6}}>Objects: {this.state.keys}</span>
       <div style={{float: 'right'}}>
-        <span>DB:</span>
+        <span>Collection/Key:</span>
         <select
           onChange={this.handleChange.bind(this)}
-          value={this.props.db} className="form-control" style={{
-            width: 50,
+          value={this.props.collection || ''} className="form-control" style={{
+            width: 100,
             marginTop: 2,
             marginRight: 2,
             marginLeft: 3,
@@ -105,15 +74,15 @@ class Footer extends React.Component {
           }}
                                                          >
           {
-          (max => {
+          (collections => {
             const items = []
-            for (let i = 0; i < max; i++) {
-              items.push(<option
-                key={i} value={i}
-                        >{i}</option>)
+            for (let i = 0; i < collections.length; i++) {
+              items.push(
+                <option key={collections[i]} value={collections[i]}>{collections[i]}</option>
+              )
             }
             return items
-          })(this.state.databases || 1)
+          })(this.state.collections)
         }
         </select>
       </div>

@@ -10,20 +10,21 @@ import {clipboard} from 'electron'
 require('./index.scss')
 
 class KeyList extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       keys: [],
       selectedKey: null,
       sidebarWidth: 300,
-      cursor: '0'
+      cursor: 0,
+      collection: props.collection
     }
     this.randomClass = 'pattern-table-' + (Math.random() * 100000 | 0)
   }
 
   refresh(firstTime) {
     this.setState({
-      cursor: '0',
+      cursor: 0,
       keys: []
     }, () => {
       this.handleSelect()
@@ -32,11 +33,11 @@ class KeyList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.db !== this.props.db) {
-      this.props.redis.select(nextProps.db)
+    if (nextProps.collection !== this.props.collection) {
+      this.setState({collection: nextProps.collection});
     }
 
-    const needRefresh = nextProps.db !== this.props.db ||
+    const needRefresh = nextProps.collection !== this.props.collection ||
       nextProps.pattern !== this.props.pattern ||
       nextProps.redis !== this.props.redis
 
@@ -52,6 +53,10 @@ class KeyList extends React.Component {
   }
 
   scan(firstTime) {
+    if (!this.state.collection) {
+      return
+    }
+
     const scanKey = this.scanKey = Math.random() * 10000 | 0
     if (this.scanning) {
       this.lastFirstTime = firstTime
@@ -99,14 +104,16 @@ class KeyList extends React.Component {
     }
 
     function iter(fetchCount, times) {
-      redis.scan(cursor, 'MATCH', pattern, 'COUNT', fetchCount, (err, res) => {
+      console.log(this.state, cursor, pattern, fetchCount);
+      redis.scan(this.state.collection, 'CURSOR', cursor, 'MATCH', pattern, 'LIMIT', fetchCount, 'IDS', (err, res) => {
         if (this.scanKey !== scanKey) {
           this.scanning = false
           setTimeout(this.scan.bind(this, this.lastFirstTime), 0)
           return
         }
-        const newCursor = res[0]
         let fetchedKeys = res[1]
+        const newCursor = cursor + fetchedKeys.length;
+
         let promise
         if (fetchedKeys.length) {
           if (filterKey) {
@@ -130,7 +137,7 @@ class KeyList extends React.Component {
           let needContinue = true
           if (filterKeyExists && firstTime) {
             needContinue = false
-          } else if (Number(newCursor) === 0) {
+          } else if (fetchedKeys.length === 0) {
             needContinue = false
           } else if (count >= 100) {
             needContinue = false
@@ -151,7 +158,7 @@ class KeyList extends React.Component {
             })
           } else {
             this.setState({
-              cursor,
+              cursor: 0,
               scanning: false,
               keys: this.state.keys.concat(keys)
             }, () => {
@@ -358,7 +365,7 @@ class KeyList extends React.Component {
       >
       <Table
         rowHeight={24}
-        rowsCount={this.state.keys.length + (this.state.cursor === '0' ? 0 : 1)}
+        rowsCount={this.state.keys.length + (this.state.cursor === 0 ? 0 : 1)}
         onScrollStart={() => {
           if (this.state.editableKey) {
             this.setState({editableKey: null})

@@ -24,10 +24,10 @@ class KeyBrowser extends React.Component {
     const {patterns, connectionKey} = this.props
     return (<div className="pane sidebar">
       <PatternList
-        patterns={patterns.get(`${connectionKey}|${this.props.db}`, List())}
+        patterns={patterns.get(`${connectionKey}|${this.props.collection}`, List())}
         height={this.props.height - this.footerHeight}
         connectionKey={this.props.connectionKey}
-        db={this.props.db}
+        collection={this.props.collection}
         pattern={this.state.pattern}
         onChange={pattern => {
           this.setState({pattern})
@@ -36,7 +36,7 @@ class KeyBrowser extends React.Component {
       <KeyList
         height={this.props.height - this.footerHeight}
         width={this.props.width}
-        db={this.props.db}
+        collection={this.props.collection}
         pattern={this.state.pattern || '*'}
         redis={this.props.redis}
         onCreateKey={this.props.onCreateKey}
@@ -45,7 +45,7 @@ class KeyBrowser extends React.Component {
         />
       <Footer
         onDatabaseChange={this.props.onDatabaseChange}
-        db={this.props.db}
+        collection={this.props.collection}
         redis={this.props.redis}
         />
     </div>)

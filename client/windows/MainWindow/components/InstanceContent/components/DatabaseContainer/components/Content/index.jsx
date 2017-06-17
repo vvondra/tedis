@@ -12,7 +12,7 @@ class Content extends React.PureComponent {
     super()
     this.state = {
       pattern: '',
-      db: 0,
+      collection: 0,
       version: 0,
       tab: 'Content'
     }

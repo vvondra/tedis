@@ -15,7 +15,7 @@ class Database extends React.PureComponent {
     this.state = {
       sidebarWidth: 260,
       key: null,
-      db: 0,
+      collection: null,
       version: 0,
       metaVersion: 0,
       pattern: '',
@@ -63,8 +63,8 @@ class Database extends React.PureComponent {
         connectionKey={this.props.connectionKey}
         onSelectKey={key => this.setState({key, version: this.state.version + 1})}
         onCreateKey={this.handleCreateKey.bind(this)}
-        db={this.state.db}
-        onDatabaseChange={db => this.setState({db})}
+        collection={this.state.collection}
+        onDatabaseChange={collection => this.setState({collection})}
         onKeyMetaChange={() => this.setState({metaVersion: this.state.metaVersion + 1})}
         />
       <Content
@@ -74,8 +74,8 @@ class Database extends React.PureComponent {
         metaVersion={this.state.metaVersion}
         connectionKey={this.props.connectionKey}
         redis={this.props.redis}
-        db={this.state.db}
-        onDatabaseChange={db => this.setState({db})}
+        collection={this.state.collection}
+        onDatabaseChange={collection => this.setState({collection})}
         />
     </SplitPane>)
   }
