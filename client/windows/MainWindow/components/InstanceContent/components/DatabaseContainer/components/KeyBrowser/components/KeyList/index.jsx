@@ -288,34 +288,6 @@ class KeyList extends React.Component {
             })
           } else if (key === 'reload') {
             this.handleSelect(this.index, true)
-          } else if (key === 'duplicate') {
-            const sourceKey = this.state.keys[this.index][0]
-            let targetKey
-            showModal({
-              button: 'Duplicate Key',
-              form: {
-                type: 'object',
-                properties: {
-                  'Target Key:': {
-                    type: 'string',
-                    minLength: 1
-                  },
-                  'Keep TTL:': {
-                    type: 'boolean'
-                  }
-                }
-              }
-            }).then(res => {
-              targetKey = res['Target Key:']
-              const duplicateTTL = res['Keep TTL:']
-              this.props.redis.duplicateKey(sourceKey, targetKey, duplicateTTL ? 'TTL' : 'NOTTL')
-            }).then(() => {
-              this.props.onCreateKey(targetKey)
-            }).catch(err => {
-              if (err && err.message) {
-                alert(err.message)
-              }
-            })
           }
         }, 0)
         ReactDOM.findDOMNode(this).focus()
@@ -326,7 +298,6 @@ class KeyList extends React.Component {
         sep1: '---------',
         ttl: {name: 'Set expiration...'},
         rename: {name: 'Rename Key...'},
-        duplicate: {name: 'Duplicate Key...'},
         sep2: '---------',
         delete: {name: 'Delete Key'}
       }
