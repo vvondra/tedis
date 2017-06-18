@@ -5,14 +5,14 @@ const flat = require('electron-osx-sign').flat
 
 packager({
   dir: path.join(__dirname, '..'),
-  appCopyright: '© 2017, Zihua Li',
+  appCopyright: '© 2017, Vojtěch Vondra, Zihua Li',
   asar: true,
   overwrite: true,
   electronVersion: pkg.electronVersion,
   icon: path.join(__dirname, '..', 'icns', 'MyIcon'),
   out: path.join(__dirname, '..', 'out'),
   platform: 'mas',
-  appBundleId: `li.zihua.${pkg.name}`,
+  appBundleId: `cz.vojtechvondra.${pkg.name}`,
   appCategoryType: 'public.app-category.developer-tools',
   osxSign: {
     type: process.env.NODE_ENV === 'production' ? 'distribution' : 'development',

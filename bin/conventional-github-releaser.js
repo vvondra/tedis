@@ -27,9 +27,9 @@ conventionalGithubReleaser(AUTH, {
   // github.releases.uploadAsset({
   //   id,
   //   owner: 'luin',
-  //   repo: 'medis',
-  //   name: `medis-v${pkg.version}-mac-x64.zip`,
-  //   filePath: path.join(__dirname, '..', 'medis.zip')
+  //   repo: 'tedis',
+  //   name: `tedis-v${pkg.version}-mac-x64.zip`,
+  //   filePath: path.join(__dirname, '..', 'tedis.zip')
   // }, function (err, res) {
   //   console.log(err, res);
   //   process.exit(0);

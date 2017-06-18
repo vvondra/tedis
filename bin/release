@@ -2,7 +2,7 @@
 
 . "bin/deploy"
 
-APP_PATH="Medis.app"
+APP_PATH="Tedis.app"
 FRAMEWORKS_PATH="$APP_PATH/Contents/Frameworks"
 INFO="$APP_PATH/Contents/Info.plist"
 
@@ -10,15 +10,15 @@ INFO="$APP_PATH/Contents/Info.plist"
 version=`cat package.json | json version` &&
 git commit -am "chore(release): %s" &&
 perl -pi -e "s/#version#/$version/g" "$INFO" &&
-zip --symlinks -r9 "medis.zip" "$APP_PATH" &&
+zip --symlinks -r9 "tedis.zip" "$APP_PATH" &&
 conventional-changelog -i CHANGELOG.md -s -p angular &&
 git add CHANGELOG.md &&
 git commit -m"docs(CHANGELOG): $version" &&
 git tag -a -m "chore(release): %s" $version &&
 git push --follow-tags &&
 node "bin/conventional-github-releaser" &&
-TARGET="medis-v$version-mac-x64.zip" &&
-mv "medis.zip" $TARGET &&
+TARGET="tedis-v$version-mac-x64.zip" &&
+mv "tedis.zip" $TARGET &&
 echo "**************************************************************************"
-echo "Upload $TARGET to the https://github.com/luin/medis/releases/edit/v$version"
+echo "Upload $TARGET to the https://github.com/luin/tedis/releases/edit/v$version"
 echo "**************************************************************************"

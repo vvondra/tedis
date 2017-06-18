@@ -116,12 +116,12 @@ const menuTemplate = [{
   submenu: [{
     label: 'Report an Issue...',
     click() {
-      require('shell').openExternal('mailto:medis@zihua.li');
+      require('shell').openExternal('mailto:tedis@zihua.li');
     }
   }, {
     label: 'Learn More',
     click() {
-      require('shell').openExternal('http://getmedis.com');
+      require('shell').openExternal('http://gettedis.com');
     }
   }]
 }]

@@ -1,7 +1,7 @@
 node_modules
-Medis.app
+Tedis.app
 sign
-Medis.pkg
+Tedis.pkg
 .DS_Store
 main.js
 patternManager.js
