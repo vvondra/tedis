@@ -121,7 +121,7 @@ class KeyList extends React.Component {
           }
           count += fetchedKeys.length
           const pipeline = redis.pipeline()
-          fetchedKeys.forEach(key => pipeline.type(key))
+          fetchedKeys.forEach(key => pipeline.get(this.state.collection, key))
           promise = pipeline.exec()
         } else {
           promise = Promise.resolve([])
@@ -132,8 +132,9 @@ class KeyList extends React.Component {
             setTimeout(this.scan.bind(this), 0)
             return
           }
-          const keys = _.zip(fetchedKeys, types.map(res => res[1]))
-
+          const keys = _.zip(fetchedKeys, types.map(
+            res => { try { return JSON.parse(res[1]).type; } catch (e) { return 'not JSON'; }}
+          ));
           let needContinue = true
           if (filterKeyExists && firstTime) {
             needContinue = false
@@ -433,13 +434,15 @@ class KeyList extends React.Component {
                 href="#" style={{color: '#666'}} onClick={evt => {
                   evt.preventDefault()
                   this.scan()
-                }}
-                                                 >Scan more</a>)
+                }}>Scan more</a>)
             }
             return (<ContentEditable
               className="ContentEditable overflow-wrapper"
               enabled={cellData === this.state.editableKey}
               onChange={newKeyName => {
+                // TODO: not working yet!
+                // Extract into function
+                
                 const keys = this.state.keys
                 const oldKey = keys[rowIndex][0]
                 if (oldKey !== newKeyName && newKeyName) {
