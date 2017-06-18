@@ -48,7 +48,7 @@ class MainWindow extends PureComponent {
       return ''
     }
     const version = activeInstance.get('version')
-      ? `(Redis ${activeInstance.get('version')}) `
+      ? `(Tile38 ${activeInstance.get('version')}) `
       : ''
 
     return version + activeInstance.get('title')

@@ -86,7 +86,6 @@
     "jsx-loader": "^0.13.2",
     "lint": "^1.1.2",
     "minimatch": "^3.0.4",
-    "msgpack5": "^3.3.0",
     "node-sass": "^3.3.3",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
