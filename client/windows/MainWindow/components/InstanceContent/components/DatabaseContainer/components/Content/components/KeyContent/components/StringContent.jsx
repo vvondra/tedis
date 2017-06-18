@@ -4,12 +4,38 @@ import React from 'react'
 import BaseContent from './BaseContent'
 import Editor from './Editor'
 
-class StringContent extends BaseContent {
-  init(keyName, keyType) {
-    super.init(keyName, keyType)
-    this.props.redis.getBuffer(keyName, (_, buffer) => {
-      this.setState({buffer: buffer instanceof Buffer ? buffer : Buffer.alloc(0)})
+class StringContent extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      buffer: Buffer.alloc(0)
+    }
+  }
+
+  init(objectDocument) {
+    this.setState({
+      buffer: new Buffer(JSON.stringify(objectDocument))
     })
+  }
+
+  componentDidMount() {
+    this.init(this.props.objectDocument)
+  }
+
+  componentDidUpdate() {
+    if (typeof this.state.scrollToRow === 'number') {
+      this.setState({scrollToRow: null})
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.keyName !== this.props.keyName) {
+      this.init(nextProps.objectDocument)
+    }
+  }
+
+  componentWillUnmount() {
+    this.setState = function () {}
   }
 
   save(value, callback) {

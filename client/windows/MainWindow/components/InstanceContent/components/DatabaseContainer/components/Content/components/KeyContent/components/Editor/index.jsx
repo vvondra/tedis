@@ -31,8 +31,7 @@ class Editor extends React.PureComponent {
       changed: false,
       modes: {
         raw: false,
-        json: false,
-        messagepack: false
+        json: false
       }
     }
   }
@@ -72,11 +71,8 @@ class Editor extends React.PureComponent {
     const modes = {}
     modes.raw = content
     modes.json = tryFormatJSON(content, true)
-    modes.messagepack = modes.json ? false : tryFormatMessagepack(buffer, true)
     let currentMode = 'raw'
-    if (modes.messagepack) {
-      currentMode = 'messagepack'
-    } else if (modes.json) {
+    if (modes.json) {
       currentMode = 'json'
     }
     this.setState({modes, currentMode, changed: false}, () => {
@@ -92,13 +88,6 @@ class Editor extends React.PureComponent {
         alert('The json is invalid. Please check again.')
         return
       }
-    } else if (this.state.currentMode === 'messagepack') {
-      content = tryFormatMessagepack(this.state.modes.messagepack)
-      if (!content) {
-        alert('The json is invalid. Please check again.')
-        return
-      }
-      content = msgpack.encode(JSON.parse(content))
     }
     this.props.onSave(content, err => {
       if (err) {
@@ -177,28 +166,6 @@ class Editor extends React.PureComponent {
           lint: Boolean(this.state.modes.raw)
         }}
         />)
-    } else if (this.state.currentMode === 'messagepack') {
-      viewer = (<Codemirror
-        ref="codemirror"
-        key="messagepack"
-        value={this.state.modes.messagepack}
-        onChange={this.updateContent.bind(this, 'messagepack')}
-        options={{
-          mode: {
-            name: 'javascript',
-            json: true
-          },
-          tabSize: 2,
-          indentWithTabs: true,
-          styleActiveLine: true,
-          lineNumbers: true,
-          lineWrapping: this.state.wrapping,
-          gutters: ['CodeMirror-lint-markers'],
-          autoCloseBrackets: true,
-          matchTags: true,
-          lint: Boolean(this.state.modes.raw)
-        }}
-        />)
     } else {
       viewer = <div/>
     }
@@ -226,7 +193,6 @@ class Editor extends React.PureComponent {
           >
           <option value="raw" disabled={typeof this.state.modes.raw !== 'string'}>Raw</option>
           <option value="json" disabled={typeof this.state.modes.json !== 'string'}>JSON</option>
-          <option value="messagepack" disabled={typeof this.state.modes.messagepack !== 'string'}>MessagePack</option>
         </select>
         <button
           className="nt-button"
@@ -243,25 +209,6 @@ export default Editor
 function tryFormatJSON(jsonString, beautify) {
   try {
     const o = JSON.parse(jsonString)
-    if (o && typeof o === 'object' && o !== null) {
-      if (beautify) {
-        return JSON.stringify(o, null, '\t')
-      }
-      return JSON.stringify(o)
-    }
-  } catch (e) { /**/ }
-
-  return false
-}
-
-function tryFormatMessagepack(buffer, beautify) {
-  try {
-    let o
-    if (typeof buffer === 'string') {
-      o = JSON.parse(buffer)
-    } else {
-      o = msgpack.decode(buffer)
-    }
     if (o && typeof o === 'object' && o !== null) {
       if (beautify) {
         return JSON.stringify(o, null, '\t')

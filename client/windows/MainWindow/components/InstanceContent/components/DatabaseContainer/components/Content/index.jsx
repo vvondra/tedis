@@ -12,19 +12,19 @@ class Content extends React.PureComponent {
     super()
     this.state = {
       pattern: '',
-      collection: 0,
       version: 0,
       tab: 'Content'
     }
   }
 
   init(keyName) {
-    this.setState({keyType: null})
+    this.setState({objectDocument: null})
     if (keyName !== null) {
-      this.setState({keyType: null})
-      this.props.redis.type(keyName).then(keyType => {
+      this.setState({objectDocument: null})
+      this.props.redis.get(this.props.collection, keyName).then(objectDocument => {
+        console.log("setting", objectDocument, keyName, this.props.keyName);
         if (keyName === this.props.keyName) {
-          this.setState({keyType})
+          this.setState({objectDocument: JSON.parse(objectDocument)})
         }
       })
     }
@@ -55,7 +55,7 @@ class Content extends React.PureComponent {
       <KeyContent
         style={{display: this.state.tab === 'Content' ? 'flex' : 'none'}}
         keyName={this.props.keyName}
-        keyType={this.state.keyType}
+        objectDocument={this.state.objectDocument}
         height={this.props.height - 66}
         redis={this.props.redis}
         onKeyContentChange={() => {
@@ -77,7 +77,7 @@ class Content extends React.PureComponent {
         />
       <Footer
         keyName={this.props.keyName}
-        keyType={this.state.keyType}
+        objectDocument={this.state.objectDocument}
         version={this.state.version}
         redis={this.props.redis}
         />
