@@ -133,7 +133,7 @@ class KeyList extends React.Component {
             return
           }
           const keys = _.zip(fetchedKeys, types.map(
-            res => { try { return JSON.parse(res[1]).type; } catch (e) { return 'not JSON'; }}
+            res => { try { return JSON.parse(res[1]); } catch (e) { return 'not JSON'; }}
           ));
           let needContinue = true
           if (filterKeyExists && firstTime) {
@@ -365,17 +365,17 @@ class KeyList extends React.Component {
         >
         <Column
           header="type"
-          width={40}
+          width={60}
           cell={({rowIndex}) => {
             const item = this.state.keys[rowIndex]
             if (!item) {
               return ''
             }
-            const cellData = item[1]
+            const cellData = item[1].type
             if (!cellData) {
               return ''
             }
-            const type = cellData === 'string' ? 'str' : cellData
+            const type = cellData === 'string' ? 'str' : cellData.toLowerCase()
             return <span className={`key-type ${type}`}>{type}</span>
           }}
           />
@@ -419,7 +419,7 @@ class KeyList extends React.Component {
               }}
                  />
           }
-          width={this.props.width - 40}
+          width={this.props.width - 60}
           cell={({rowIndex}) => {
             const item = this.state.keys[rowIndex]
             let cellData

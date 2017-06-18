@@ -27,7 +27,7 @@
   margin: 4px 0 0;
   padding: 0 !important;
   text-transform: uppercase;
-  width: 32px;
+  width: 52px;
   height: 16px;
   font-size: 11px !important;
   line-height: 17px !important;
@@ -36,10 +36,10 @@
   background: #60d4ca;
   color: #fff;
 
-  &.str { background: #5dc936; }
-  &.list { background: #fca32a; }
+  &.polygon { background: #5dc936; }
+  &.point { background: #fca32a; }
   &.hash { background: #b865d0; }
-  &.zset { background: #fa5049; }
+  &.bounds { background: #fa5049; }
   &.set { background: #239ff2; }
 }
 
