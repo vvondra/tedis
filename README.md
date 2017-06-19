@@ -1,6 +1,6 @@
 # Tedis
 
-Tedis is a beautiful, easy-to-use Tile38 management application built on the modern web with [Electron](https://github.com/atom/electron), [React](https://facebook.github.io/react/), and [Redux](https://github.com/rackt/redux). It's powered by many awesome Node.js modules, especially [ioredis](https://github.com/luin/ioredis) and [ssh2](https://github.com/mscdex/ssh2).
+Tedis is a beautiful, easy-to-use [Tile38](http://tile38.com/) management application built on the modern web with [Electron](https://github.com/atom/electron), [React](https://facebook.github.io/react/), and [Redux](https://github.com/rackt/redux). It's powered by many awesome Node.js modules, especially [ioredis](https://github.com/luin/ioredis) and [ssh2](https://github.com/mscdex/ssh2).
 
 It is a fork of [Medis](http://getmedis.com/), a UI for Redis. Since Tile38 supports the Redis RESP protocol, many of the features and core functionalities of Medis could be re-used and build upon. Many thanks to the original creators!
 
