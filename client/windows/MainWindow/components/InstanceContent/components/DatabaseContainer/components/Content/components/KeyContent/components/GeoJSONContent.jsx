@@ -1,10 +1,9 @@
 'use strict'
 
 import React from 'react'
-import BaseContent from './BaseContent'
 import Editor from './Editor'
 
-class StringContent extends React.Component {
+class GeoJSONContent extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -61,4 +60,4 @@ class StringContent extends React.Component {
   }
 }
 
-export default StringContent
+export default GeoJSONContent

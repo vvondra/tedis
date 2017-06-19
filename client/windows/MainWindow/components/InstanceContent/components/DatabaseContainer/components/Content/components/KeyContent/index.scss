@@ -15,3 +15,17 @@
     font-size: 62px;
   }
 }
+
+.Content {
+  flex: 1;
+  position: relative;
+
+  .base-content {
+    margin-top: -1px;
+    position: relative;
+    overflow: hidden;
+    &:focus {
+      outline: 0;
+    }
+  }
+}
