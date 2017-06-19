@@ -55,7 +55,7 @@
     "url": "git://github.com/vvondra/tedis.git"
   },
   "dependencies": {
-    "fixed-data-table-contextmenu": "^1.6.5",
+    "fixed-data-table-2": "^0.7.17",
     "ioredis": "^2.4.2",
     "jquery": "^2.1.4",
     "lodash": "^3.10.1",
@@ -94,7 +94,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.5.2",
-    "react-codemirror": "^0.3.0",
+    "react-codemirror": "^1.0.0",
     "react-document-title": "^2.0.1",
     "react-dom": "^15.5.4",
     "react-draggable": "^2.2.6",

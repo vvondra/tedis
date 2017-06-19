@@ -1,7 +1,7 @@
 'use strict'
 
 import React, {PureComponent} from 'react'
-import {Cell} from 'fixed-data-table-contextmenu'
+import {Cell} from 'fixed-data-table-2'
 
 export default class SortHeaderCell extends PureComponent {
   handleClick(evt) {
