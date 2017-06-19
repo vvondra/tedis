@@ -1,11 +1,6 @@
 # Tedis
 
-![Tedis](http://gettedis.com/screen.png)
-
-Tedis is a beautiful, easy-to-use Redis management application built on the modern web with [Electron](https://github.com/atom/electron), [React](https://facebook.github.io/react/), and [Redux](https://github.com/rackt/redux). It's powered by many awesome Node.js modules, especially [ioredis](https://github.com/luin/ioredis) and [ssh2](https://github.com/mscdex/ssh2).
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Join the chat at https://gitter.im/luin/tedis](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/luin/tedis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Tedis is a beautiful, easy-to-use Tile38 management application built on the modern web with [Electron](https://github.com/atom/electron), [React](https://facebook.github.io/react/), and [Redux](https://github.com/rackt/redux). It's powered by many awesome Node.js modules, especially [ioredis](https://github.com/luin/ioredis) and [ssh2](https://github.com/mscdex/ssh2).
 
 Tedis starts with all the basic features you need:
 

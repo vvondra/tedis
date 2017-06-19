@@ -74,7 +74,6 @@
     "codemirror": "^5.25.2",
     "conventional-github-releaser": "^0.5.3",
     "css-loader": "^0.28.4",
-    "cz-conventional-changelog": "^1.1.5",
     "electron": "^1.7.3",
     "electron-osx-sign": "^0.4.4",
     "electron-packager": "^8.6.0",
@@ -111,11 +110,6 @@
     "webpack": "^2.6.1",
     "webpack-dev-server": "^1.12.0",
     "xo": "^0.18.1"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   },
   "false": {}
 }
