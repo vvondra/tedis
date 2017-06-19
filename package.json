@@ -64,14 +64,18 @@
   },
   "devDependencies": {
     "asar": "^0.8.3",
-    "babel-core": "^5.8.25",
+    "babel-core": "^6.25.0",
     "babel-eslint": "^4.1.6",
-    "babel-loader": "^5.3.2",
+    "babel-loader": "^7.0.0",
+    "babel-preset-electron": "^1.4.15",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
     "codemirror": "^5.25.2",
     "conventional-github-releaser": "^0.5.3",
-    "css-loader": "^0.19.0",
+    "css-loader": "^0.28.4",
     "cz-conventional-changelog": "^1.1.5",
-    "electron": "^1.6.11",
+    "electron": "^1.7.3",
     "electron-osx-sign": "^0.4.4",
     "electron-packager": "^8.6.0",
     "eslint-config-xo": "^0.18.1",
@@ -82,8 +86,8 @@
     "human-format": "^0.5.0",
     "immutable": "^3.8.1",
     "json-editor": "^0.7.23",
+    "json5": "^0.5.1",
     "jsonlint": "^1.6.2",
-    "jsx-loader": "^0.13.2",
     "lint": "^1.1.2",
     "minimatch": "^3.0.4",
     "node-sass": "^3.3.3",
@@ -97,14 +101,14 @@
     "react-redux": "^5.0.4",
     "react-split-pane": "^0.1.63",
     "redis-splitargs": "^1.0.0",
-    "redux": "^3.6.0",
+    "redux": "^3.7.0",
     "redux-actions": "^2.0.3",
     "reselect": "^3.0.1",
-    "sass-loader": "^3.0.0",
+    "sass-loader": "^6.0.6",
     "sortablejs": "^1.4.1",
-    "style-loader": "^0.12.4",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.12.2",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^2.6.1",
     "webpack-dev-server": "^1.12.0",
     "xo": "^0.18.1"
   },
@@ -112,5 +116,6 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  }
+  },
+  "false": {}
 }

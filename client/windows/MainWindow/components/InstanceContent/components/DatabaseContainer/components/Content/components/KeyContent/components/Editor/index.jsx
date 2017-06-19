@@ -18,7 +18,6 @@ import jsonlint from 'jsonlint'
 window.jsonlint = jsonlint.parser
 require('codemirror/lib/codemirror.css')
 require('codemirror/addon/lint/lint.css')
-const msgpack = require('msgpack5')()
 
 require('./index.scss')
 
