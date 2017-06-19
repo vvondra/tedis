@@ -12,11 +12,10 @@ plugins.push(
       warnings: false
     }
   }),
-  new webpack.optimize.DedupePlugin(),
   new webpack.DefinePlugin({
     'process.env': { NODE_ENV: '"production"' }
   }),
-  new webpack.NoErrorsPlugin()
+  new webpack.NoEmitOnErrorsPlugin()
 );
 
 config.plugins = plugins;

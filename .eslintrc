@@ -108,7 +108,7 @@
     "no-undef-init": 1,
     "no-undef": 1,
     "no-unused-vars": [1, { "vars": "local", "args": "after-used" }],
-    no-use-before-define: [1, "nofunc"],
+    "no-use-before-define": [1, "nofunc"],
 
     "handle-callback-err": 1,
     "no-mixed-requires": 1,
@@ -164,7 +164,6 @@
     "constructor-super": 1,
     "generator-star-spacing": [1, { "before": true, "after": false }],
     "no-this-before-super": 1,
-    "no-var": 1,
     "object-shorthand": [1, "always"],
     "prefer-const": 1,
 
@@ -172,6 +171,6 @@
     "max-len": [1, 200, 2],
     "max-params": 0,
     "max-statements": 0,
-    "no-bitwise": 1,
+    "no-bitwise": 1
   }
 }
