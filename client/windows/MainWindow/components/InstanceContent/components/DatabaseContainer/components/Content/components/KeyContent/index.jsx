@@ -39,7 +39,6 @@ class KeyContent extends PureComponent {
     this.init(this.props.objectDocument)
   }
 
-
   componentDidUpdate() {
     if (typeof this.state.scrollToRow === 'number') {
       this.setState({scrollToRow: null})
@@ -47,7 +46,7 @@ class KeyContent extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.keyName !== this.props.keyName) {
+    if (nextProps.objectDocument !== this.props.objectDocument) {
       this.init(nextProps.objectDocument)
     }
   }
