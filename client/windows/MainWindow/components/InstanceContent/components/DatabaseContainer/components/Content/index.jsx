@@ -22,7 +22,6 @@ class Content extends React.PureComponent {
     if (keyName !== null) {
       this.setState({objectDocument: null})
       this.props.redis.get(this.props.collection, keyName).then(objectDocument => {
-        console.log("setting", objectDocument, keyName, this.props.keyName);
         if (keyName === this.props.keyName) {
           this.setState({objectDocument: JSON.parse(objectDocument)})
         }

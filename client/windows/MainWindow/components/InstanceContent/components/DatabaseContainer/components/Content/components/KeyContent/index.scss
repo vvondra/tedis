@@ -17,8 +17,10 @@
 }
 
 .Content {
-  flex: 1;
+  display: flex;
+  flex: 1 1;
   position: relative;
+  order: 2;
 
   .base-content {
     margin-top: -1px;
@@ -28,4 +30,10 @@
       outline: 0;
     }
   }
+}
+
+
+.leaflet-container {
+  width: 100%;
+  flex: 1;
 }

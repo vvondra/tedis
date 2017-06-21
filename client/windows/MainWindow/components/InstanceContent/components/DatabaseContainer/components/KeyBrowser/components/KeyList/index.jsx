@@ -104,7 +104,6 @@ class KeyList extends React.Component {
     }
 
     function iter(fetchCount, times) {
-      console.log(this.state, cursor, pattern, fetchCount);
       redis.scan(this.state.collection, 'CURSOR', cursor, 'MATCH', pattern, 'LIMIT', fetchCount, 'IDS', (err, res) => {
         if (this.scanKey !== scanKey) {
           this.scanning = false
