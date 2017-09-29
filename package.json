@@ -58,6 +58,7 @@
     "fixed-data-table-2": "^0.7.17",
     "ioredis": "^2.4.2",
     "jquery": "^2.1.4",
+    "leaflet": "^1.2.0",
     "lodash": "^3.10.1",
     "redis-commands": "^1.0.1",
     "ssh2": "^0.5.4"
@@ -89,7 +90,7 @@
     "jsonlint": "^1.6.2",
     "lint": "^1.1.2",
     "minimatch": "^3.0.4",
-    "node-sass": "^3.3.3",
+    "node-sass": "^4.5.3",
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.5.2",
